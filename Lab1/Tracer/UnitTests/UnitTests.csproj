@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LibDemonstration\LibDemonstration.csproj" />
+    <ProjectReference Include="..\LibDemonstration\Program.csproj" />
     <ProjectReference Include="..\Tracer\Tracer.csproj" />
   </ItemGroup>
 

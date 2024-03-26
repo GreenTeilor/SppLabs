@@ -33,7 +33,7 @@ namespace LibDemonstration
             thread1.Join(); // Главный поток ожидает два других
             thread2.Join();
 
-            _tracer2.GetTraceResult(); // Результаты Tracer: TraceResultStruct всех потков объединяются в общую map 
+            _tracer2.GetTraceResult(); // Результаты Tracer: TraceResultStruct всех потоков объединяются в общую map 
             _tracer1.GetTraceResult();
             _tracer0.GetTraceResult();
             // Результаты из общей Map записываются в файлы json и XML
