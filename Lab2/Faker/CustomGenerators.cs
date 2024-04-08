@@ -2,36 +2,35 @@
 
 namespace Faker;
 
-// Конфигурация генератора под кастомные генераторы
 public class CustomGenerators
-    // Словарь под генераторы разных классов<Класс(Его тип), словарь генераторов этого класса>
 {
+    //Map for custom generators of different types
     private readonly Dictionary<Type, Dictionary<string, IUserGenerator>> _generators;
-    // Так как поле readonly, оно должно быть инициализированно в конструкторе
+
     public CustomGenerators()
     {
         _generators = new Dictionary<Type, Dictionary<string, IUserGenerator>>();
     }
-    // Добавление генератора под определенное поле определенного класса
-    // TTypeName - тип класса, TFieldType - тип поля, для которого добавляется генератор, TGenerator - тип самого генератора
-    // getField - лямбда, которая всего лишь возвращает поле класса TTypeName
+
+    //Add generator for certain field of certain class
+    //TTypeName - type of class, TFieldType - field type, TGenerator - generator type
+    //getField - lambda expression to return field of class TTypeName
     public void Add<TTypeName, TFieldType, TGenerator>(Expression<Func<TTypeName, TFieldType>> getField)
     {
-        // Если нет ни одного генератора поля для переданного класса в общей мапе,
-        // добавляем пустой словарь генераторов под этот класс
+        //If there is no custom generators for fields of this class yet
         if (!_generators.ContainsKey(typeof(TTypeName)))
         {
             _generators.Add(typeof(TTypeName), new Dictionary<string, IUserGenerator>());
         }
-        // Теперь получаем поле и имя самого поля, под которое будет добавлен генератор
+        //Get field and it's name
         var member = getField.Body as MemberExpression ?? throw new ArgumentException("Invalid expression");
         var fieldName = member.Member.Name;
-        // Создание генератора, с помощью переданного типа генератора
+        //Create generator
         var generator = (IUserGenerator)Activator.CreateInstance(typeof(TGenerator));
-        // Добавление генератора под определенный класс, для определенного имени поля
+        //Add generator for field of class TTypeName with and name
         _generators[typeof(TTypeName)].Add(fieldName, generator);
     }
-    // Есть ли генератор определенного класса, для определенного имени поля
+    //Check if exists generator for field with certain name of class
     public bool HasGenerator(Type type, string fieldName)
     {
         return _generators.ContainsKey(type) && _generators[type].ContainsKey(fieldName);

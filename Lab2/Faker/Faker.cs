@@ -231,7 +231,7 @@ namespace Faker
 
             foreach (var field in fieldsInfo)
             {   
-                //Get value of field
+                //Get object of field
                 var getMethod = field.GetValue(obj);
 
                 //Call create
@@ -272,7 +272,7 @@ namespace Faker
             }
         }
 
-        //Check if object has public getter and setter for each field
+        //Check if object has public getter and setter for each property
         private bool IsDto(IReflect t)
         {
             var methods = t.GetMethods(BindingFlags.DeclaredOnly |
