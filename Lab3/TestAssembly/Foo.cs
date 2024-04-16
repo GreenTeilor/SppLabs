@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestLibrary
+namespace TestAssembly
 {
     public class Foo
     {
